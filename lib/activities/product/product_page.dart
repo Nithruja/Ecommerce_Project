@@ -3,18 +3,34 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ProductPage extends StatefulWidget {
-  const ProductPage({super.key});
-
+  const ProductPage({super.key, required this.id});
+final String id;
   @override
   State<ProductPage> createState() => _ProductPageState();
 }
 
 class _ProductPageState extends State<ProductPage> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+
+    print("id :${widget.id}");
+  }
+
+  @override
   Widget build(BuildContext context) {
+
+    print(MediaQuery.of(context).size.height);
+    var width = MediaQuery.of(context).size.width;
+    print(width);
+
+
+
     return SafeArea(child:
     Scaffold(
-      backgroundColor: Colors.white70,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text("Short dress"),
 
@@ -93,31 +109,22 @@ class _ProductPageState extends State<ProductPage> {
               SingleChildScrollView(scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
-                    for( int i=1;i<10;i++)
+                    // for( int i=1;i<10;i++)
                       Column(
                         children: [
                           Container(
                             child: Row(
                               children: [
                                 Container(
-                                  height: 450,
-                                  width: 400,
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                          decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(10)),
-                                          width: 350,
-                                           height: 600,
-                                          child: Image.asset(
-                                            'assets/shortdress.png',
-                                            fit: BoxFit.cover,
-                                          )),
-
-
-                                    ],
-                                  ),
-                                ),
+                                    decoration: BoxDecoration(
+                                         borderRadius: BorderRadius.circular(10)),
+                                    width: width/2,
+                                     height: 600,
+                                    child: Image.asset(
+                                      // color: Colors.red,
+                                      'assets/shortdress.png',
+                                      fit: BoxFit.fill,
+                                    )),
                               ],
                             ),
                           ),

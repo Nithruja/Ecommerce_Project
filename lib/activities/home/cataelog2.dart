@@ -1,8 +1,10 @@
+import 'dart:convert';
+
 import 'package:ecommerce/activities/product/product_page.dart';
  import 'package:flutter/material.dart';
 
 import '../../helper_widgets/bottom_navigation_bar.dart';
-
+import 'package:http/http.dart' as http;
 class Womenstops extends StatefulWidget {
   const Womenstops({super.key});
 
@@ -11,7 +13,42 @@ class Womenstops extends StatefulWidget {
 }
 
 class _WomenstopsState extends State<Womenstops> {
+
+
+
+  List products = [];
   int currentIndex = 1;
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+
+    print("initiated");
+
+    getProducts();
+
+  }
+
+  
+getProducts() async {
+  
+  var response=await http.get(Uri.parse("http://localhost:2302/getproducts"));
+  print("body : ${response.body}");
+
+  products=jsonDecode(response.body);
+  print("products length :${products.length}");
+
+  setState(() {
+
+  });
+
+
+
+
+}
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -155,309 +192,103 @@ class _WomenstopsState extends State<Womenstops> {
                 const SizedBox(
                   height: 20,
                 ),
-                SingleChildScrollView(
-                  child: Container(
-                    margin: EdgeInsets.only(left: 10),
-                    child: Column(
-                      children: [
+                Container(
+                  // width: 600,
+                  // color: Colors.green,
+                  margin: EdgeInsets.only(left: 10),
+                  child: Wrap(
+                    direction: Axis.horizontal,
+                    children: [
+                      for (int i = 0; i < products.length; i++)
+
+                        //card
                         GestureDetector(
-                          onTap  : (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductPage()));
-
-                  },
-                          child: Row(
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Stack(
-                                      children: [
-                                        Image.asset(
-                                          "assets/t3.jpg",
-                                          width: 170,
-                                          height: 220,
-                                          fit: BoxFit.fill,
-                                        ),
-                                        Positioned(
-                                            right: 10,
-                                            bottom: 10,
-                                            child: Container(
-                                                height: 40,
-                                                width: 40,
-                                                decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius:
-                                                    BorderRadius.circular(50)),
-                                                child: Icon(Icons.favorite_border))),
-                                      ],
-                                    ),
-                                  ),
-                                  const Row(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ProductPage(id:products[i]['_id'])));
+                          },
+                          child: Container(
+                            width: 200,
+                            // color:Colors.red,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Stack(
                                     children: [
-                                      Icon(
-                                        Icons.star,
-                                        color: Colors.yellow,
+                                      Image.asset(
+                                        "assets/t3.jpg",
+                                        width: 170,
+                                        height: 220,
+                                        fit: BoxFit.fill,
                                       ),
-                                      Icon(
-                                        Icons.star,
-                                        color: Colors.yellow,
-                                      ),
-                                      Icon(
-                                        Icons.star,
-                                        color: Colors.yellow,
-                                      ),
-                                      Icon(
-                                        Icons.star,
-                                        color: Colors.yellow,
-                                      ),
-                                      Icon(
-                                        Icons.star_border,
-                                        color: Colors.yellow,
-                                      ),
-                                      Text(
-                                        '(3)',
-                                        style: TextStyle(color: Colors.grey),
-                                      ),
+                                      Positioned(
+                                          right: 10,
+                                          bottom: 10,
+                                          child: Container(
+                                              height: 40,
+                                              width: 40,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          50)),
+                                              child:
+                                                  Icon(Icons.favorite_border))),
                                     ],
                                   ),
-                                  Text(
-                                    "Mango",
-                                    style: TextStyle(color: Colors.grey),
-                                  ),
-                                   InkWell(
-                                     onTap: (){
-                                     },
-                                     child: Text(
-                                      "T-Shirt Spanish",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold, fontSize: 25),
-                                                                 ),
-                                   ),
-                                  Text("Rs.999")
-                                ],
-                              ),
-                              SizedBox(width: 50,),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Stack(
-                                      children: [
-                                        Image.asset(
-                                          "assets/t3.jpg",
-                                          width: 170,
-                                          height: 220,
-                                          fit: BoxFit.fill,
-                                        ),
-                                        Positioned(
-                                            right: 10,
-                                            bottom: 10,
-                                            child: Container(
-                                                height: 40,
-                                                width: 40,
-                                                decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius:
-                                                    BorderRadius.circular(50)),
-                                                child: Icon(Icons.favorite_border))),
-                                      ],
+                                ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(
+                                      Icons.star,
+                                      color: Colors.yellow,
                                     ),
-                                  ),
-                                  const Row(
-                                    children: [
-                                      Icon(
-                                        Icons.star,
-                                        color: Colors.yellow,
-                                      ),
-                                      Icon(
-                                        Icons.star,
-                                        color: Colors.yellow,
-                                      ),
-                                      Icon(
-                                        Icons.star,
-                                        color: Colors.yellow,
-                                      ),
-                                      Icon(
-                                        Icons.star,
-                                        color: Colors.yellow,
-                                      ),
-                                      Icon(
-                                        Icons.star_border,
-                                        color: Colors.yellow,
-                                      ),
-                                      Text(
-                                        '(3)',
-                                        style: TextStyle(color: Colors.grey),
-                                      ),
-                                    ],
-                                  ),
-                                  Text(
-                                    "Mango",
-                                    style: TextStyle(color: Colors.grey),
-                                  ),
-                                  InkWell(
-                                    onTap: (){
-                                    },
-                                    child: Text(
-                                      "T-Shirt Spanish",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold, fontSize: 25),
+                                    Icon(
+                                      Icons.star,
+                                      color: Colors.yellow,
                                     ),
+                                    Icon(
+                                      Icons.star,
+                                      color: Colors.yellow,
+                                    ),
+                                    Icon(
+                                      Icons.star,
+                                      color: Colors.yellow,
+                                    ),
+                                    Icon(
+                                      Icons.star_border,
+                                      color: Colors.yellow,
+                                    ),
+                                    Text(
+                                      '($i)',
+                                      style: TextStyle(color: Colors.grey),
+                                    ),
+                                  ],
+                                ),
+                                Text(
+                                  "Mango",
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                                InkWell(
+                                  onTap: () {},
+                                  child: Text(
+                                    products[i]['productName'],
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 25),
                                   ),
-                                  Text("Rs.999")
-                                ],
-                              ),
-
-                            ],
+                                ),
+                                Text("Rs.${products[i]['productPrice']}")
+                              ],
+                            ),
                           ),
                         ),
-                        Row(
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Stack(
-                                    children: [
-                                      Image.asset(
-                                        "assets/t3.jpg",
-                                        width: 170,
-                                        height: 220,
-                                        fit: BoxFit.fill,
-                                      ),
-                                      Positioned(
-                                          right: 10,
-                                          bottom: 10,
-                                          child: Container(
-                                              height: 40,
-                                              width: 40,
-                                              decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                  BorderRadius.circular(50)),
-                                              child: Icon(Icons.favorite_border))),
-                                    ],
-                                  ),
-                                ),
-                                const Row(
-                                  children: [
-                                    Icon(
-                                      Icons.star,
-                                      color: Colors.yellow,
-                                    ),
-                                    Icon(
-                                      Icons.star,
-                                      color: Colors.yellow,
-                                    ),
-                                    Icon(
-                                      Icons.star,
-                                      color: Colors.yellow,
-                                    ),
-                                    Icon(
-                                      Icons.star,
-                                      color: Colors.yellow,
-                                    ),
-                                    Icon(
-                                      Icons.star_border,
-                                      color: Colors.yellow,
-                                    ),
-                                    Text(
-                                      '(3)',
-                                      style: TextStyle(color: Colors.grey),
-                                    ),
-                                  ],
-                                ),
-                                Text(
-                                  "Mango",
-                                  style: TextStyle(color: Colors.grey),
-                                ),
-                                const Text(
-                                  "T-Shirt Spanish",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 25),
-                                ),
-                                Text("Rs.999")
-                              ],
-                            ),
-                            SizedBox(width: 50,),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Stack(
-                                    children: [
-                                      Image.asset(
-                                        "assets/t3.jpg",
-                                        width: 170,
-                                        height: 220,
-                                        fit: BoxFit.fill,
-                                      ),
-                                      Positioned(
-                                          right: 10,
-                                          bottom: 10,
-                                          child: Container(
-                                              height: 40,
-                                              width: 40,
-                                              decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                  BorderRadius.circular(50)),
-                                              child: Icon(Icons.favorite_border))),
-                                    ],
-                                  ),
-                                ),
-                                const Row(
-                                  children: [
-                                    Icon(
-                                      Icons.star,
-                                      color: Colors.yellow,
-                                    ),
-                                    Icon(
-                                      Icons.star,
-                                      color: Colors.yellow,
-                                    ),
-                                    Icon(
-                                      Icons.star,
-                                      color: Colors.yellow,
-                                    ),
-                                    Icon(
-                                      Icons.star,
-                                      color: Colors.yellow,
-                                    ),
-                                    Icon(
-                                      Icons.star_border,
-                                      color: Colors.yellow,
-                                    ),
-                                    Text(
-                                      '(3)',
-                                      style: TextStyle(color: Colors.grey),
-                                    ),
-                                  ],
-                                ),
-                                Text(
-                                  "Mango",
-                                  style: TextStyle(color: Colors.grey),
-                                ),
-                                const Text(
-                                  "T-Shirt Spanish",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 25),
-                                ),
-                                Text("Rs.999")
-                              ],
-                            ),
-                          ],
-                        ),
-
-
-
-                      ],
-                    ),
+                    ],
                   ),
                 )
               ],
@@ -465,7 +296,7 @@ class _WomenstopsState extends State<Womenstops> {
           ),
         ),
       ),
-      bottomNavigationBar:BottomNavigation(),
+      bottomNavigationBar: BottomNavigation(),
     );
   }
 }

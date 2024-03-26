@@ -1,12 +1,9 @@
-import 'dart:html';
 
 import 'package:ecommerce/activities/cart/shipping_address.dart';
 import 'package:ecommerce/activities/product/reviews_ratings.dart';
 import 'package:ecommerce/activities/profile/my_orders.dart';
 import 'package:ecommerce/activities/profile/settings.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+ import 'package:flutter/material.dart';
 
 import '../../helper_widgets/bottom_navigation_bar.dart';
 
